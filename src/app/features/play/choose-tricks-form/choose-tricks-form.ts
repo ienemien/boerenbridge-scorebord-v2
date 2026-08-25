@@ -27,6 +27,11 @@ export class ChooseTricksForm {
 
   private readonly chosen = signal<ReadonlyMap<number, number>>(new Map());
 
+  readonly remaining = computed(() => {
+    const total = [...this.chosen().values()].reduce((sum, value) => sum + value, 0);
+    return this.step().nrOfCards - total;
+  });
+
   valueFor(playerId: number): number | null {
     return this.chosen().get(playerId) ?? null;
   }

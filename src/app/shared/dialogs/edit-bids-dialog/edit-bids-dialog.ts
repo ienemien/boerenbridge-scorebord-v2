@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,6 +31,11 @@ export class EditBidsDialog {
   private readonly values = signal<ReadonlyMap<number, number>>(
     new Map(this.step.scores.map((score) => [score.playerId, score.chosenTricks]))
   );
+
+  readonly remaining = computed(() => {
+    const total = [...this.values().values()].reduce((sum, value) => sum + value, 0);
+    return this.step.nrOfCards - total;
+  });
 
   valueFor(playerId: number): number | null {
     return this.values().get(playerId) ?? null;

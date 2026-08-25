@@ -1,6 +1,6 @@
 <mat-card-header>
-  <mat-card-title>Kies aantal slagen</mat-card-title>
-  <mat-card-subtitle>Aantal kaarten: {{ step().nrOfCards }}</mat-card-subtitle>
+  <mat-card-title>Kies aantal gekozen slagen</mat-card-title>
+  <mat-card-subtitle>Aantal kaarten: {{ step().nrOfCards }} · Nog te kiezen: {{ remaining() }}</mat-card-subtitle>
 </mat-card-header>
 <mat-card-content>
   <form class="tricks-form">

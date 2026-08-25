@@ -27,6 +27,11 @@ export class ActualTricksForm {
 
   private readonly actual = signal<ReadonlyMap<number, number>>(new Map());
 
+  readonly remaining = computed(() => {
+    const total = [...this.actual().values()].reduce((sum, value) => sum + value, 0);
+    return this.step().nrOfCards - total;
+  });
+
   chosenFor(playerId: number): number {
     return this.step().scores.find((score) => score.playerId === playerId)!.chosenTricks;
   }
