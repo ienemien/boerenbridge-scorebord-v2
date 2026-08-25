@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,6 +19,7 @@ import { ConfirmNewGameDialog } from './shared/dialogs/confirm-new-game-dialog/c
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    MatDividerModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

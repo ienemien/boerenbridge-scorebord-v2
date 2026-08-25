@@ -13,13 +13,18 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item type="button" (click)="startNewGame()">
-      <mat-icon>replay</mat-icon>
-      <span>Nieuw spel</span>
+    <button mat-menu-item type="button" routerLink="/">
+      <mat-icon>sports_esports</mat-icon>
+      <span>Terug naar spel</span>
     </button>
     <button mat-menu-item type="button" routerLink="/scoreboard">
       <mat-icon>leaderboard</mat-icon>
       <span>Scorebord</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item type="button" (click)="startNewGame()">
+      <mat-icon>replay</mat-icon>
+      <span>Nieuw spel</span>
     </button>
   </mat-menu>
 </mat-toolbar>
