@@ -5,6 +5,12 @@
 .app-title {
   font-size: 1.1rem;
   font-weight: 500;
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .app-content {
