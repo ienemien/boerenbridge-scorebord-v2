@@ -54,4 +54,15 @@ body {
   margin: 0;
   height: 100%;
 }
+
+// Edit-round dialogs go edge-to-edge on small screens instead of floating as a
+// small centered card, matching the Material full-screen-dialog pattern for
+// forms on mobile. See ScoreboardTable.edit().
+.fullscreen-dialog .mdc-dialog__surface {
+  border-radius: 0 !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
 /* You can add global styles to this file, and also import other style files */

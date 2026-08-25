@@ -29,46 +29,26 @@
               <div class="round-cards">{{ step.nrOfCards }}</div>
               <div class="round-dealer">deler: {{ playerName(step.dealerId) }}</div>
               @if (isEditable(step)) {
-                @if (isEditing(step)) {
-                  <button mat-icon-button (click)="commitEdit(step)" aria-label="Opslaan">
-                    <mat-icon>check</mat-icon>
-                  </button>
-                  <button mat-icon-button (click)="cancelEdit()" aria-label="Annuleren">
-                    <mat-icon>close</mat-icon>
-                  </button>
-                } @else {
-                  <button mat-icon-button (click)="startEdit(step)" aria-label="Bewerken">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                }
+                <button mat-icon-button (click)="edit(step)" aria-label="Bewerken">
+                  <mat-icon>edit</mat-icon>
+                </button>
               }
             </td>
             @for (player of players(); track player.id) {
               <td>
-                @if (isEditing(step)) {
-                  <mat-select
-                    [value]="editValueFor(player.id)"
-                    (selectionChange)="setEditValue(player.id, $event.value)"
-                  >
-                    @for (option of tricksOptions(step); track option) {
-                      <mat-option [value]="option">{{ option }}</mat-option>
-                    }
-                  </mat-select>
-                } @else {
-                  @let score = scoreFor(step, player.id);
-                  @if (score) {
-                    <div class="score-cell">
-                      <span class="tricks">
-                        {{ score.chosenTricks }}
-                        @if (score.actualTricks !== undefined) {
-                          → {{ score.actualTricks }} ({{ score.added }})
-                        }
-                      </span>
-                      @if (score.total !== undefined) {
-                        <span class="total">totaal {{ score.total }}</span>
+                @let score = scoreFor(step, player.id);
+                @if (score) {
+                  <div class="score-cell">
+                    <span class="tricks">
+                      {{ score.chosenTricks }}
+                      @if (score.actualTricks !== undefined) {
+                        → {{ score.actualTricks }} ({{ score.added }})
                       }
-                    </div>
-                  }
+                    </span>
+                    @if (score.total !== undefined) {
+                      <span class="total">totaal {{ score.total }}</span>
+                    }
+                  </div>
                 }
               </td>
             }

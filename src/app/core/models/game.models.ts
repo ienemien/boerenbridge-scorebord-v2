@@ -39,3 +39,7 @@ export interface UpdateResult {
   success: boolean;
   message?: string;
 }
+
+export interface EditRoundDialogData {
+  step: Step;
+}
