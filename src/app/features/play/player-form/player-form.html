@@ -1,0 +1,42 @@
+<mat-card-header>
+  <mat-card-title>Spelers</mat-card-title>
+  <mat-card-subtitle>Voeg minimaal 2 en maximaal 8 spelers toe</mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  @if (players().length > 0) {
+    <mat-list>
+      @for (player of players(); track player.id) {
+        <mat-list-item>
+          {{ player.name }}
+          <button
+            mat-icon-button
+            matListItemMeta
+            type="button"
+            (click)="removePlayer(player.id)"
+            aria-label="Verwijder speler"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+
+  <form class="add-player-row" (ngSubmit)="addPlayer()">
+    <mat-form-field appearance="outline">
+      <mat-label>Voornaam</mat-label>
+      <input
+        matInput
+        name="newPlayerName"
+        [ngModel]="newPlayerName()"
+        (ngModelChange)="newPlayerName.set($event)"
+      />
+    </mat-form-field>
+    <button mat-stroked-button type="submit">
+      <mat-icon>add</mat-icon>
+      Voeg speler toe
+    </button>
+  </form>
+
+  <button mat-flat-button color="primary" type="button" (click)="startGame()">Start spel</button>
+</mat-card-content>

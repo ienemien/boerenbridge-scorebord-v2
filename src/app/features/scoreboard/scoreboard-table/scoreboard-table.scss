@@ -1,0 +1,65 @@
+.standings {
+  margin-bottom: 16px;
+
+  h3 {
+    margin: 0 0 8px;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+}
+
+.empty {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.history-table-wrapper {
+  overflow-x: auto;
+}
+
+.history-table {
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    border: 1px solid var(--mat-sys-outline-variant);
+    padding: 6px 10px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  th {
+    background: var(--mat-sys-surface-container);
+  }
+}
+
+.round-cell {
+  text-align: left;
+}
+
+.round-cards {
+  font-weight: 600;
+}
+
+.round-dealer {
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.score-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .total {
+    font-size: 0.75rem;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+mat-select {
+  width: 64px;
+}

@@ -1,0 +1,24 @@
+<mat-card-header>
+  <mat-card-title>Kies aantal slagen</mat-card-title>
+  <mat-card-subtitle>Aantal kaarten: {{ step().nrOfCards }}</mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+  <form class="tricks-form">
+    @for (player of players(); track player.id) {
+      <mat-form-field appearance="outline">
+        <mat-label>
+          {{ player.name }}
+          @if (player.id === step().dealerId) {
+            <mat-icon class="dealer-icon" aria-label="Deler" inline>style</mat-icon>
+          }
+        </mat-label>
+        <mat-select [value]="valueFor(player.id)" (selectionChange)="select(player.id, $event.value)">
+          @for (option of tricksOptions(); track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </form>
+  <button mat-flat-button color="primary" type="button" (click)="save()">Start ronde</button>
+</mat-card-content>

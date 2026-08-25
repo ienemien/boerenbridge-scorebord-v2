@@ -1,0 +1,18 @@
+@let view = gameState.view();
+
+<mat-card>
+  @switch (view.kind) {
+    @case ('players') {
+      <app-player-form />
+    }
+    @case ('choose-tricks') {
+      <app-choose-tricks-form />
+    }
+    @case ('actual-tricks') {
+      <app-actual-tricks-form />
+    }
+    @case ('round-summary') {
+      <app-round-summary [isLastStep]="view.isLastStep" />
+    }
+  }
+</mat-card>
