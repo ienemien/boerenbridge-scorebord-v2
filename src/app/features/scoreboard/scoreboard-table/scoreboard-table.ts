@@ -5,8 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { EditRoundDialogData, Player, Score, Step } from '../../../core/models/game.models';
 import { GameStateService } from '../../../core/services/game-state';
-import { EditActualTricksDialog } from '../../../shared/dialogs/edit-actual-tricks-dialog/edit-actual-tricks-dialog';
-import { EditBidsDialog } from '../../../shared/dialogs/edit-bids-dialog/edit-bids-dialog';
+import { EditRoundDialog } from '../../../shared/dialogs/edit-round-dialog/edit-round-dialog';
 
 @Component({
   selector: 'app-scoreboard-table',
@@ -60,11 +59,7 @@ export class ScoreboardTable {
       maxWidth: isMobile ? '100vw' : '90vw',
       panelClass: isMobile ? 'fullscreen-dialog' : undefined,
     };
-    if (this.isFullyScored(step)) {
-      this.dialog.open(EditActualTricksDialog, config);
-    } else {
-      this.dialog.open(EditBidsDialog, config);
-    }
+    this.dialog.open(EditRoundDialog, config);
   }
 
   scoreFor(step: Step, playerId: number): Score | undefined {

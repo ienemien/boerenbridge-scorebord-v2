@@ -1,16 +1,39 @@
 <div class="dialog-header">
-  <h2 mat-dialog-title>Behaalde slagen</h2>
-  <button mat-icon-button type="button" (click)="cancel()" aria-label="Sluiten zonder op te slaan">
+  <h2 mat-dialog-title>Ronde {{ step.nrOfCards }} bewerken</h2>
+  <button mat-icon-button type="button" (click)="close()" aria-label="Sluiten">
     <mat-icon>close</mat-icon>
   </button>
 </div>
 <mat-dialog-content>
-  <p class="subtitle">Aantal kaarten: {{ step.nrOfCards }} · Nog te verdelen: {{ remaining() }}</p>
+  @if (canEditActualTricks) {
+    <div class="tabs">
+      <button
+        type="button"
+        class="tab"
+        [class.active]="activeTab() === 'bids'"
+        (click)="selectTab('bids')"
+      >
+        Gekozen slagen
+      </button>
+      <button
+        type="button"
+        class="tab"
+        [class.active]="activeTab() === 'actual'"
+        (click)="selectTab('actual')"
+      >
+        Behaalde slagen
+      </button>
+    </div>
+  }
+  <p class="subtitle">
+    Aantal kaarten: {{ step.nrOfCards }} ·
+    {{ activeTab() === 'bids' ? 'Nog te kiezen' : 'Nog te verdelen' }}: {{ remaining() }}
+  </p>
   <form class="tricks-form">
     @for (player of players(); track player.id) {
       <mat-form-field appearance="outline">
         <mat-label>
-          {{ player.name }} (gekozen: {{ chosenFor(player.id) }})
+          {{ player.name }}
           @if (player.id === step.dealerId) {
             <mat-icon class="dealer-icon" aria-label="Deler" inline>style</mat-icon>
           }
