@@ -3,7 +3,7 @@ import { Component, computed, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { EditRoundDialogData, Score, Step } from '../../../core/models/game.models';
+import { EditRoundDialogData, Player, Score, Step } from '../../../core/models/game.models';
 import { GameStateService } from '../../../core/services/game-state';
 import { EditActualTricksDialog } from '../../../shared/dialogs/edit-actual-tricks-dialog/edit-actual-tricks-dialog';
 import { EditBidsDialog } from '../../../shared/dialogs/edit-bids-dialog/edit-bids-dialog';
@@ -19,16 +19,28 @@ export class ScoreboardTable {
   private readonly dialog = inject(MatDialog);
   private readonly breakpointObserver = inject(BreakpointObserver);
 
-  readonly players = this.gameState.players;
   readonly editableStepIds = this.gameState.editableStepIds;
 
-  readonly rows = computed(() => this.gameState.steps().filter((step) => step.scores.length > 0));
+  /** Rounds that have started, most recently played first. */
+  readonly rounds = computed(() =>
+    [...this.gameState.steps()].reverse().filter((step) => step.scores.length > 0)
+  );
 
-  readonly standings = computed(() => {
-    const latest = this.rows()
-      .filter((step) => this.isFullyScored(step))
-      .at(-1);
-    return latest ? [...latest.scores].sort((a, b) => (b.total ?? 0) - (a.total ?? 0)) : [];
+  /** rounds() is already most-recent-first, so the first fully-scored one is the latest. */
+  private readonly latestScoredRound = computed(() =>
+    this.rounds().find((step) => this.isFullyScored(step))
+  );
+
+  /** Players ranked by their current total, highest first. */
+  readonly players = computed(() => {
+    const latest = this.latestScoredRound();
+    if (!latest) {
+      return this.gameState.players();
+    }
+    const totals = new Map(latest.scores.map((score) => [score.playerId, score.total ?? 0]));
+    return [...this.gameState.players()].sort(
+      (a, b) => (totals.get(b.id) ?? 0) - (totals.get(a.id) ?? 0)
+    );
   });
 
   isEditable(step: Step): boolean {
@@ -59,7 +71,15 @@ export class ScoreboardTable {
     return step.scores.find((score) => score.playerId === playerId);
   }
 
+  totalFor(player: Player): number | null {
+    const latest = this.latestScoredRound();
+    if (!latest) {
+      return null;
+    }
+    return latest.scores.find((score) => score.playerId === player.id)?.total ?? null;
+  }
+
   playerName(playerId: number): string {
-    return this.players().find((player) => player.id === playerId)?.name ?? '';
+    return this.gameState.players().find((player) => player.id === playerId)?.name ?? '';
   }
 }
