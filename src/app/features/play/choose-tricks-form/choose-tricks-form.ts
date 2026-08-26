@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
@@ -13,7 +12,7 @@ function range(n: number): number[] {
 
 @Component({
   selector: 'app-choose-tricks-form',
-  imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatSelectModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatSelectModule],
   templateUrl: './choose-tricks-form.html',
   styleUrl: './choose-tricks-form.scss',
 })

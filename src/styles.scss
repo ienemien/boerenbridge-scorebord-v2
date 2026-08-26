@@ -55,6 +55,19 @@ body {
   height: 100%;
 }
 
+// Screen titles now sit directly on the page background instead of inside a
+// mat-card, so give them the same look everywhere without a card wrapper.
+main.app-content h2 {
+  font: var(--mat-sys-headline-small);
+  margin: 0 0 4px;
+}
+
+main.app-content .subtitle {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 16px;
+}
+
 // Edit-round dialogs go edge-to-edge on small screens instead of floating as a
 // small centered card, matching the Material full-screen-dialog pattern for
 // forms on mobile. See ScoreboardTable.edit().

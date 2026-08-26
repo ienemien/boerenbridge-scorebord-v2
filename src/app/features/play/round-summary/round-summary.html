@@ -1,9 +1,5 @@
-<mat-card-header>
-  <mat-card-title>Scorebord</mat-card-title>
-</mat-card-header>
-<mat-card-content>
-  <app-scoreboard-table />
-  @if (!isLastStep()) {
-    <button mat-flat-button color="primary" type="button" (click)="nextRound()">Volgende ronde</button>
-  }
-</mat-card-content>
+<h2>Scorebord</h2>
+<app-scoreboard-table />
+@if (!isLastStep()) {
+  <button mat-flat-button color="primary" type="button" (click)="nextRound()">Volgende ronde</button>
+}

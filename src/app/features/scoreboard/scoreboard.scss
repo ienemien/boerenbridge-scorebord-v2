@@ -1,18 +1,9 @@
-// The component host is the actual flex item in .app-content. Without an
-// explicit width it sizes to its content instead of filling the container,
-// and without min-width: 0 it won't shrink below the history table's
-// intrinsic width — either way the card ends up overflowing on mobile.
 :host {
   display: block;
   width: 100%;
-  min-width: 0;
-}
-
-mat-card {
-  width: 100%;
   max-width: 900px;
+  min-width: 0;
   margin: 0 auto;
-  box-sizing: border-box;
 }
 
 button {

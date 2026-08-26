@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { GameStateService } from '../../core/services/game-state';
@@ -9,7 +8,7 @@ import { ConfirmNewGameDialog } from '../../shared/dialogs/confirm-new-game-dial
 
 @Component({
   selector: 'app-home',
-  imports: [MatButtonModule, MatCardModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

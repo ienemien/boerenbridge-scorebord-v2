@@ -1,24 +1,21 @@
-<mat-card-header>
-  <mat-card-title>Behaalde slagen</mat-card-title>
-  <mat-card-subtitle>Aantal kaarten: {{ step().nrOfCards }} · Nog te verdelen: {{ remaining() }}</mat-card-subtitle>
-</mat-card-header>
-<mat-card-content>
-  <form class="tricks-form">
-    @for (player of players(); track player.id) {
-      <mat-form-field appearance="outline">
-        <mat-label>
-          {{ player.name }} (gekozen: {{ chosenFor(player.id) }})
-          @if (player.id === step().dealerId) {
-            <mat-icon class="dealer-icon" aria-label="Deler" inline>style</mat-icon>
-          }
-        </mat-label>
-        <mat-select [value]="valueFor(player.id)" (selectionChange)="select(player.id, $event.value)">
-          @for (option of tricksOptions(); track option) {
-            <mat-option [value]="option">{{ option }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    }
-  </form>
-  <button mat-flat-button color="primary" type="button" (click)="save()">Bekijk tussenstand</button>
-</mat-card-content>
+<h2>Behaalde slagen</h2>
+<p class="subtitle">Aantal kaarten: {{ step().nrOfCards }} · Nog te verdelen: {{ remaining() }}</p>
+
+<form class="tricks-form">
+  @for (player of players(); track player.id) {
+    <mat-form-field appearance="outline">
+      <mat-label>
+        {{ player.name }} (gekozen: {{ chosenFor(player.id) }})
+        @if (player.id === step().dealerId) {
+          <mat-icon class="dealer-icon" aria-label="Deler" inline>style</mat-icon>
+        }
+      </mat-label>
+      <mat-select [value]="valueFor(player.id)" (selectionChange)="select(player.id, $event.value)">
+        @for (option of tricksOptions(); track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+</form>
+<button mat-flat-button color="primary" type="button" (click)="save()">Bekijk tussenstand</button>
