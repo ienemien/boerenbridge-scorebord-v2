@@ -1,5 +1,16 @@
 <h2>Scorebord</h2>
 <app-scoreboard-table />
-@if (!isLastStep()) {
+@if (isLastStep()) {
+  <p class="game-over">
+    Spel afgelopen!
+    @if (winner(); as winner) {
+      {{ winner.name }} heeft gewonnen.
+    }
+  </p>
+  <button mat-flat-button color="primary" type="button" (click)="startNewGame()">
+    <mat-icon>replay</mat-icon>
+    Nieuw spel starten
+  </button>
+} @else {
   <button mat-flat-button color="primary" type="button" (click)="nextRound()">Volgende ronde</button>
 }
