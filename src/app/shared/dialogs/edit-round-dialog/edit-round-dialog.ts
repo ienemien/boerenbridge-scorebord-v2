@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditRoundDialogData } from '../../../core/models/game.models';
 import { GameStateService } from '../../../core/services/game-state';
+import { PlayerAvatar } from '../../components/player-avatar/player-avatar';
 
 export type EditTab = 'bids' | 'actual';
 
@@ -16,7 +17,14 @@ function range(n: number): number[] {
 
 @Component({
   selector: 'app-edit-round-dialog',
-  imports: [MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatSelectModule],
+  imports: [
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule,
+    PlayerAvatar,
+  ],
   templateUrl: './edit-round-dialog.html',
   styleUrl: './edit-round-dialog.scss',
 })

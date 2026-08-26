@@ -23,7 +23,10 @@
       <tbody>
         @for (player of players(); track player.id) {
           <tr>
-            <td class="player-cell">{{ player.name }}</td>
+            <td class="player-cell">
+              <app-player-avatar [player]="player" [size]="24" />
+              {{ player.name }}
+            </td>
             <td class="total-cell">{{ totalFor(player) }}</td>
             @for (step of rounds(); track step.id) {
               <td>

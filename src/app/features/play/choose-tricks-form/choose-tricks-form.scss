@@ -4,6 +4,17 @@
   gap: 8px;
 }
 
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
 .dealer-icon {
   vertical-align: middle;
   margin-left: 4px;

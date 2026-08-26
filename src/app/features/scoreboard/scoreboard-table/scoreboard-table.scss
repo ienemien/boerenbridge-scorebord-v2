@@ -35,6 +35,9 @@
 .player-cell {
   text-align: left;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .total-cell {

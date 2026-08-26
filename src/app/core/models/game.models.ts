@@ -1,6 +1,9 @@
 export interface Player {
   id: number;
   name: string;
+  /** Randomly assigned when the player is added; optional so older saved games still load. */
+  avatarIcon?: string;
+  avatarColor?: string;
 }
 
 export interface Score {

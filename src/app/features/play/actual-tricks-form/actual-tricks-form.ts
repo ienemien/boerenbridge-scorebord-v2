@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameStateService } from '../../../core/services/game-state';
+import { PlayerAvatar } from '../../../shared/components/player-avatar/player-avatar';
 
 function range(n: number): number[] {
   return Array.from({ length: n + 1 }, (_, i) => i);
@@ -12,7 +13,7 @@ function range(n: number): number[] {
 
 @Component({
   selector: 'app-actual-tricks-form',
-  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatSelectModule],
+  imports: [MatButtonModule, MatFormFieldModule, MatIconModule, MatSelectModule, PlayerAvatar],
   templateUrl: './actual-tricks-form.html',
   styleUrl: './actual-tricks-form.scss',
 })

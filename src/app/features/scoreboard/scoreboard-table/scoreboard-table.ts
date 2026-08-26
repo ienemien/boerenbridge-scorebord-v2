@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { EditRoundDialogData, Player, Score, Step } from '../../../core/models/game.models';
 import { GameStateService } from '../../../core/services/game-state';
 import { EditRoundDialog } from '../../../shared/dialogs/edit-round-dialog/edit-round-dialog';
+import { PlayerAvatar } from '../../../shared/components/player-avatar/player-avatar';
 
 @Component({
   selector: 'app-scoreboard-table',
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, PlayerAvatar],
   templateUrl: './scoreboard-table.html',
   styleUrl: './scoreboard-table.scss',
 })

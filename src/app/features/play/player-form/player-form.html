@@ -5,6 +5,7 @@
   <mat-list>
     @for (player of players(); track player.id) {
       <mat-list-item>
+        <app-player-avatar matListItemAvatar [player]="player" [size]="40" />
         {{ player.name }}
         <button
           mat-icon-button

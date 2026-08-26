@@ -8,6 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Player } from '../../../core/models/game.models';
 import { GameStateService } from '../../../core/services/game-state';
+import { randomAvatar } from '../../../core/utils/avatar';
+import { PlayerAvatar } from '../../../shared/components/player-avatar/player-avatar';
 
 @Component({
   selector: 'app-player-form',
@@ -18,6 +20,7 @@ import { GameStateService } from '../../../core/services/game-state';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    PlayerAvatar,
   ],
   templateUrl: './player-form.html',
   styleUrl: './player-form.scss',
@@ -34,7 +37,7 @@ export class PlayerForm {
     if (!name) {
       return;
     }
-    this.players.update((players) => [...players, { id: this.nextId(players), name }]);
+    this.players.update((players) => [...players, this.createPlayer(players, name)]);
     this.newPlayerName.set('');
   }
 
@@ -46,7 +49,7 @@ export class PlayerForm {
     let players = this.players();
     const pendingName = this.newPlayerName().trim();
     if (pendingName) {
-      players = [...players, { id: this.nextId(players), name: pendingName }];
+      players = [...players, this.createPlayer(players, pendingName)];
     }
 
     if (players.length < 2) {
@@ -58,6 +61,19 @@ export class PlayerForm {
       return;
     }
     this.gameState.savePlayers(players);
+  }
+
+  private createPlayer(players: Player[], name: string): Player {
+    const avatar = randomAvatar(
+      players.map((player) => player.avatarIcon ?? ''),
+      players.map((player) => player.avatarColor ?? '')
+    );
+    return {
+      id: this.nextId(players),
+      name,
+      avatarIcon: avatar.icon,
+      avatarColor: avatar.color,
+    };
   }
 
   private nextId(players: Player[]): number {
