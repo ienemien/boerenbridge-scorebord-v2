@@ -41,7 +41,21 @@ export class ActualTricksForm {
   }
 
   select(playerId: number, value: number): void {
-    this.actual.update((map) => new Map(map).set(playerId, value));
+    this.actual.update((current) => {
+      const next = new Map(current).set(playerId, value);
+      const total = [...next.values()].reduce((sum, v) => sum + v, 0);
+      // Once the entered tricks already add up to the full round, everyone
+      // still unset can only have taken zero — fill those in automatically
+      // instead of making the user pick "0" for every non-scoring player.
+      if (total === this.step().nrOfCards) {
+        for (const player of this.players()) {
+          if (!next.has(player.id)) {
+            next.set(player.id, 0);
+          }
+        }
+      }
+      return next;
+    });
   }
 
   save(): void {
