@@ -26,6 +26,26 @@
             <td class="player-cell">
               <app-player-avatar [player]="player" [size]="24" />
               {{ player.name }}
+              @let change = rankChangeFor(player.id);
+              @if (change !== null) {
+                <span
+                  class="rank-change"
+                  [class.rank-up]="change > 0"
+                  [class.rank-down]="change < 0"
+                  [attr.aria-label]="
+                    change > 0
+                      ? Math.abs(change) + ' plaats(en) gestegen'
+                      : change < 0
+                        ? Math.abs(change) + ' plaats(en) gedaald'
+                        : 'Geen verandering'
+                  "
+                >
+                  <mat-icon inline>{{ change > 0 ? 'arrow_upward' : change < 0 ? 'arrow_downward' : 'remove' }}</mat-icon>
+                  @if (change !== 0) {
+                    {{ Math.abs(change) }}
+                  }
+                </span>
+              }
             </td>
             <td class="total-cell">{{ totalFor(player) }}</td>
             @for (step of rounds(); track step.id) {

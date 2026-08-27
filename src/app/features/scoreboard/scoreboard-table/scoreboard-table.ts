@@ -26,10 +26,10 @@ export class ScoreboardTable {
     [...this.gameState.steps()].reverse().filter((step) => step.scores.length > 0)
   );
 
-  /** rounds() is already most-recent-first, so the first fully-scored one is the latest. */
-  private readonly latestScoredRound = computed(() =>
-    this.rounds().find((step) => this.isFullyScored(step))
-  );
+  /** rounds() is already most-recent-first, so the first two fully-scored entries are the latest two. */
+  private readonly scoredRounds = computed(() => this.rounds().filter((step) => this.isFullyScored(step)));
+  private readonly latestScoredRound = computed(() => this.scoredRounds()[0]);
+  private readonly previousScoredRound = computed(() => this.scoredRounds()[1]);
 
   /** Players ranked by their current total, highest first. */
   readonly players = computed(() => {
@@ -42,6 +42,24 @@ export class ScoreboardTable {
       (a, b) => (totals.get(b.id) ?? 0) - (totals.get(a.id) ?? 0)
     );
   });
+
+  /** Places gained (positive) or lost (negative) since the round before last; null if there's nothing to compare against yet. */
+  private readonly rankChanges = computed(() => {
+    const currentRanks = this.rankByPlayerId(this.latestScoredRound());
+    const previousRanks = this.rankByPlayerId(this.previousScoredRound());
+    const changes = new Map<number, number>();
+    if (currentRanks && previousRanks) {
+      for (const [playerId, rank] of currentRanks) {
+        const previousRank = previousRanks.get(playerId);
+        if (previousRank !== undefined) {
+          changes.set(playerId, previousRank - rank);
+        }
+      }
+    }
+    return changes;
+  });
+
+  protected readonly Math = Math;
 
   isEditable(step: Step): boolean {
     return this.editableStepIds().has(step.id);
@@ -75,7 +93,21 @@ export class ScoreboardTable {
     return latest.scores.find((score) => score.playerId === player.id)?.total ?? null;
   }
 
+  /** Positive = moved up that many places, negative = moved down, 0 = unchanged, null = no earlier round to compare. */
+  rankChangeFor(playerId: number): number | null {
+    return this.rankChanges().get(playerId) ?? null;
+  }
+
   playerName(playerId: number): string {
     return this.gameState.players().find((player) => player.id === playerId)?.name ?? '';
+  }
+
+  /** 1 = highest total in that round. */
+  private rankByPlayerId(step: Step | undefined): Map<number, number> | null {
+    if (!step) {
+      return null;
+    }
+    const sorted = [...step.scores].sort((a, b) => (b.total ?? 0) - (a.total ?? 0));
+    return new Map(sorted.map((score, index) => [score.playerId, index + 1]));
   }
 }

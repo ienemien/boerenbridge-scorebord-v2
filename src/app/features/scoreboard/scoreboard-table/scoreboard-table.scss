@@ -43,3 +43,27 @@
 .total-cell {
   font-weight: 600;
 }
+
+.rank-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--mat-sys-on-surface-variant);
+  margin-left: auto;
+
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+
+  &.rank-up {
+    color: #2e7d32;
+  }
+
+  &.rank-down {
+    color: #c62828;
+  }
+}
