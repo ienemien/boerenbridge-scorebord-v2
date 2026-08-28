@@ -74,7 +74,7 @@ export class ScoreboardTable {
     const config: MatDialogConfig<EditRoundDialogData> = {
       data: { step },
       width: isMobile ? '100vw' : '480px',
-      height: isMobile ? '100vh' : undefined,
+      height: isMobile ? '100dvh' : undefined,
       maxWidth: isMobile ? '100vw' : '90vw',
       panelClass: isMobile ? 'fullscreen-dialog' : undefined,
     };

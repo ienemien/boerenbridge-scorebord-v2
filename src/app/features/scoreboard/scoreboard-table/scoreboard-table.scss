@@ -16,6 +16,9 @@
     padding: 6px 10px;
     text-align: center;
     white-space: nowrap;
+    // Explicit (not just inherited) so cells stay legible over the
+    // farm-theme background instead of turning transparent.
+    background: var(--mat-sys-surface);
   }
 
   th {

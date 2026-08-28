@@ -9,6 +9,29 @@ mat-toolbar {
   // as a separate bar (especially in dark mode).
   background-color: var(--mat-sys-surface-container-high);
   color: var(--mat-sys-on-surface);
+
+  // Farm-theme easter egg (see App.registerTitleTap()): a brighter barn red
+  // instead of the usual surface tone.
+  :host-context(.farm-theme) & {
+    background-color: #e63b2e;
+    color: #fff8f0;
+  }
+}
+
+// Fixed full-viewport illustration behind everything while the farm theme is
+// active. A position:fixed element always paints in the "positioned" stacking
+// layer, which sits above normal static in-flow content regardless of DOM
+// order — so this needs an explicit negative z-index to actually sit behind
+// the page content (see the paired `body` background rule in styles.scss,
+// which is made transparent under .farm-theme so this layer isn't hidden by
+// body's own opaque background paint).
+.farm-background {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .spacer {

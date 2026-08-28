@@ -53,6 +53,12 @@ body {
   // Reset the user agent margin.
   margin: 0;
   height: 100%;
+
+  // Let the farm-theme background (see app.scss .farm-background, z-index: -1)
+  // show through instead of being hidden behind body's own opaque background.
+  html.farm-theme & {
+    background-color: transparent;
+  }
 }
 
 // Screen titles now sit directly on the page background instead of inside a
@@ -68,14 +74,41 @@ main.app-content .subtitle {
   margin: 0 0 16px;
 }
 
+// The "outline" form-field appearance (used for the name/trick-count fields
+// throughout the play flow) has a transparent interior by design, so under
+// the farm theme the busy illustration behind it makes the player name label
+// and selected value hard to read. Give the whole field box — including the
+// notch the floating label sits in — an opaque surface background: white in
+// light mode, near-black in dark mode, matching --mat-sys-surface.
+html.farm-theme .mat-mdc-text-field-wrapper {
+  background-color: var(--mat-sys-surface);
+  border-radius: 4px;
+}
+
 // Edit-round dialogs go edge-to-edge on small screens instead of floating as a
 // small centered card, matching the Material full-screen-dialog pattern for
 // forms on mobile. See ScoreboardTable.edit().
+//
+// Uses dvh, not vh: on mobile browsers 100vh is the height with the address
+// bar hidden, which is taller than what's actually visible once it's shown —
+// that mismatch was pushing the close button above the visible area on
+// phones. dvh tracks the real, currently-visible viewport instead.
 .fullscreen-dialog .mdc-dialog__surface {
   border-radius: 0 !important;
   max-width: 100vw !important;
-  max-height: 100vh !important;
+  max-height: 100dvh !important;
   width: 100vw !important;
-  height: 100vh !important;
+  height: 100dvh !important;
+}
+
+// The surface is a column flexbox (header, content, actions). Material's
+// default dialog content has a fixed `max-height: 65vh`, so with only a few
+// rows the form only filled the top of the screen, leaving a large dead
+// area between it and the Opslaan button. Let content grow to fill exactly
+// the space left after the header and actions, so actions always sit at the
+// true bottom edge.
+.fullscreen-dialog .mat-mdc-dialog-content {
+  flex: 1 1 auto !important;
+  max-height: none !important;
 }
 /* You can add global styles to this file, and also import other style files */
