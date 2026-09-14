@@ -1,7 +1,77 @@
+@use '@angular/material' as mat;
+
 .add-player-row {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   flex-wrap: wrap;
   margin: 8px 0 16px;
+}
+
+.player-list {
+  margin-bottom: 8px;
+}
+
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  background: var(--mat-sys-surface);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.drag-handle {
+  color: var(--mat-sys-on-surface-variant);
+  cursor: grab;
+  touch-action: none;
+}
+
+.player-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.dealer-button {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.dealer-button-active {
+  color: var(--mat-sys-primary);
+  background: var(--mat-sys-primary-container);
+}
+
+// The dragged row's floating copy that follows the pointer.
+::ng-deep .cdk-drag-preview {
+  box-sizing: border-box;
+  background: var(--mat-sys-surface-container-high);
+  border-radius: 4px;
+  @include mat.elevation(4);
+}
+
+// Default CDK behaviour reserves a full-height empty slot where the row will
+// land, which reads as a gap rather than a clear insertion point. Collapsing
+// it to a thin accent line between the surrounding rows (matching the
+// approved mockup) makes the drop target unambiguous.
+::ng-deep .cdk-drag-placeholder {
+  height: 3px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 4px 0 !important;
+  border: none !important;
+  background: var(--mat-sys-primary) !important;
+  opacity: 1 !important;
+  overflow: hidden;
+
+  > * {
+    visibility: hidden;
+  }
+}
+
+.cdk-drag-animating {
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
 }

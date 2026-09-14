@@ -1,10 +1,10 @@
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Player } from '../../../core/models/game.models';
 import { GameStateService } from '../../../core/services/game-state';
@@ -14,12 +14,14 @@ import { PlayerAvatar } from '../../../shared/components/player-avatar/player-av
 @Component({
   selector: 'app-player-form',
   imports: [
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
     FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
     PlayerAvatar,
   ],
   templateUrl: './player-form.html',
@@ -31,6 +33,8 @@ export class PlayerForm {
 
   readonly players = signal<Player[]>([]);
   readonly newPlayerName = signal('');
+  /** Who deals the first round; null means "not chosen yet, default to the first player". */
+  readonly startingDealerId = signal<number | null>(null);
 
   addPlayer(): void {
     const name = this.newPlayerName().trim();
@@ -43,6 +47,21 @@ export class PlayerForm {
 
   removePlayer(id: number): void {
     this.players.update((players) => players.filter((player) => player.id !== id));
+    if (this.startingDealerId() === id) {
+      this.startingDealerId.set(null);
+    }
+  }
+
+  reorder(event: CdkDragDrop<Player[]>): void {
+    this.players.update((players) => {
+      const reordered = [...players];
+      moveItemInArray(reordered, event.previousIndex, event.currentIndex);
+      return reordered;
+    });
+  }
+
+  setDealer(id: number): void {
+    this.startingDealerId.set(id);
   }
 
   startGame(): void {
@@ -60,7 +79,7 @@ export class PlayerForm {
       this.snackBar.open('Te veel spelers, voeg maximaal 8 spelers toe', 'Ok', { duration: 4000 });
       return;
     }
-    this.gameState.savePlayers(players);
+    this.gameState.savePlayers(players, this.startingDealerId() ?? undefined);
   }
 
   private createPlayer(players: Player[], name: string): Player {

@@ -2,23 +2,29 @@
 <p class="subtitle">Voeg minimaal 2 en maximaal 8 spelers toe</p>
 
 @if (players().length > 0) {
-  <mat-list>
+  <div class="player-list" cdkDropList (cdkDropListDropped)="reorder($event)">
     @for (player of players(); track player.id) {
-      <mat-list-item>
-        <app-player-avatar matListItemAvatar [player]="player" [size]="40" />
-        {{ player.name }}
+      <div class="player-row" cdkDrag>
+        <mat-icon class="drag-handle" cdkDragHandle aria-hidden="true">drag_indicator</mat-icon>
+        <app-player-avatar [player]="player" [size]="40" />
+        <span class="player-name">{{ player.name }}</span>
         <button
           mat-icon-button
-          matListItemMeta
           type="button"
-          (click)="removePlayer(player.id)"
-          aria-label="Verwijder speler"
+          class="dealer-button"
+          [class.dealer-button-active]="player.id === (startingDealerId() ?? players()[0].id)"
+          (click)="setDealer(player.id)"
+          [attr.aria-pressed]="player.id === (startingDealerId() ?? players()[0].id)"
+          [attr.aria-label]="'Maak ' + player.name + ' deler'"
         >
+          <mat-icon>style</mat-icon>
+        </button>
+        <button mat-icon-button type="button" (click)="removePlayer(player.id)" aria-label="Verwijder speler">
           <mat-icon>delete</mat-icon>
         </button>
-      </mat-list-item>
+      </div>
     }
-  </mat-list>
+  </div>
 }
 
 <form class="add-player-row" (ngSubmit)="addPlayer()">

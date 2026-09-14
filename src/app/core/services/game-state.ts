@@ -62,9 +62,9 @@ export class GameStateService {
     this.currentStep.set(0);
   }
 
-  savePlayers(players: Player[]): void {
+  savePlayers(players: Player[], startingDealerId?: number): void {
     this.players.set(players);
-    this.steps.set(this.createSteps(players));
+    this.steps.set(this.createSteps(players, startingDealerId));
     this.currentStep.set(1);
   }
 
@@ -210,12 +210,13 @@ export class GameStateService {
     return result;
   }
 
-  private createSteps(players: Player[]): Step[] {
+  private createSteps(players: Player[], startingDealerId?: number): Step[] {
     const cardsPerPlayer = Math.floor(52 / players.length);
     const maxCards = Math.min(cardsPerPlayer, 10);
     const steps: Step[] = [];
     let id = 1;
-    let dealerIndex = 0;
+    const startingIndex = players.findIndex((player) => player.id === startingDealerId);
+    let dealerIndex = startingIndex >= 0 ? startingIndex : 0;
 
     for (let i = maxCards; i >= 1; i--) {
       steps.push({ id, nrOfCards: i, dealerId: players[dealerIndex].id, scores: [] });

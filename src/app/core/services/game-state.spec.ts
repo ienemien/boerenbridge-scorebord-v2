@@ -49,6 +49,29 @@ describe('GameStateService', () => {
       expect(service.steps()[0].nrOfCards).toBe(10);
       expect(service.steps().length).toBe(20);
     });
+
+    it('lets the caller choose who deals the first round, rotating on from there', () => {
+      service.savePlayers(
+        [
+          { id: 1, name: 'Tom' },
+          { id: 2, name: 'Michiel' },
+          { id: 3, name: 'Justin' },
+        ],
+        2
+      );
+
+      const steps = service.steps();
+      expect(steps.map((s) => s.dealerId).slice(0, 6)).toEqual([2, 3, 1, 2, 3, 1]);
+    });
+
+    it('falls back to the first player when no starting dealer is given', () => {
+      service.savePlayers([
+        { id: 5, name: 'Tom' },
+        { id: 6, name: 'Michiel' },
+      ]);
+
+      expect(service.steps()[0].dealerId).toBe(5);
+    });
   });
 
   describe('scoring', () => {
