@@ -1,3 +1,10 @@
+<IfModule mod_mime.c>
+  # Many servers' default mime.types don't know this extension and fall back to
+  # application/octet-stream, which makes Chrome silently refuse to treat the
+  # app as installable even though the file itself loads fine.
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
